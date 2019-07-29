@@ -177,11 +177,21 @@
 <p>③利用npm来安装cnpm，此处利用淘宝镜像速度更快<br>命令：npm install -g cnpm –registry=<a href="https://registry.npm.taobao.org" target="_blank" rel="noopener">https://registry.npm.taobao.org</a><br><strong>安装完成后，记得将cnpm安装路径添加到系统环境变量，可用cnpm -v验证是否安装成功</strong></p>
 <p>④安装hexo<br>命令：cnpm install -g hexo-cli</p>
 <p>⑤验证<br>命令：hexo -v</p>
-<h2 id="第二步：写下第一篇博客"><a href="#第二步：写下第一篇博客" class="headerlink" title="第二步：写下第一篇博客"></a>第二步：写下第一篇博客</h2><p>①切换到自己的用户路径，可自选<br>命令：cd C:\Users\排骨君</p>
+<h2 id="第二步：写下第一篇博客并部署到本地"><a href="#第二步：写下第一篇博客并部署到本地" class="headerlink" title="第二步：写下第一篇博客并部署到本地"></a>第二步：写下第一篇博客并部署到本地</h2><p>①切换到自己的用户路径，可自选<br>命令：cd C:\Users\排骨君</p>
 <p>②创建一个专用博客文件夹，并在其中初始化一个hexo博客框架<br>命令：mkdir blog<br>     cd blog<br>     hexo init</p>
 <p>③启动本地服务器，用于预览主题。默认地址： <a href="http://localhost:4000/" target="_blank" rel="noopener">http://localhost:4000/</a><br>命令：hexo s</p>
 <p>④新建一篇文章<br>命令：hexo new “我的博客初体验”<br>此命令会显示创建路径，win下可用文档编辑器打开md文件并编辑</p>
-<p>④根据路径打开文件并编辑</p>
+<p>④编辑完成后清除缓存文件 (db.json) 和已生成的静态文件 (public)（一般在博客编辑完成或更换主题后）<br>命令:hexo clean</p>
+<p>⑥生成静态文件<br>命令：hexo g</p>
+<p>⑦启动服务器，可以看到此时已经将文章部署到本地了<br>命令：hexo s</p>
+<h2 id="第三步：将博客发布到上github上"><a href="#第三步：将博客发布到上github上" class="headerlink" title="第三步：将博客发布到上github上"></a>第三步：将博客发布到上github上</h2><p>①在blog文件夹下安装git部署插件<br>命令： cnpm install hexo-deployer-git –save</p>
+<p>②修改配置文件_config.yml<br>找到Deployment部分，设置成如下：<br>deploy:<br>  type: git<br>  repo: <a href="https://github.com/rookiedali/rookiedali.github.io.git" target="_blank" rel="noopener">https://github.com/rookiedali/rookiedali.github.io.git</a><br>  branch: master<br>  <strong>注意每个冒号之后都有个空格</strong><br>  <strong>地址贴上自己github上博客项目网址</strong></p>
+<p>③部署到远端,此时就可以直接访问自己的github网站来看博客了<br>命令：hexo d</p>
+<p>④修改博客主题风格(这里是直接克隆github上大神做个一个主题)<br>命令：git clone <a href="https://github.com/litten/hexo-theme-yilia.git" target="_blank" rel="noopener">https://github.com/litten/hexo-theme-yilia.git</a> themes/yilia</p>
+<p>⑤修改配置文件_config.yml<br>找到Extensions部分下的theme，将内容中的landscape改为yilia</p>
+<p>⑥清理缓存并生成<br>命令：hexo clean<br>      hexo  g</p>
+<p>⑥启动服务器，可以看到此时已经将文章部署到本地了<br>命令：hexo s</p>
+<p>⑦部署到远端,此时就可以直接访问自己的github网站来看博客了<br>命令：hexo d</p>
 <h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a href="http://www.codesheep.cn" target="_blank" rel="noopener">www.codesheep.cn</a></p>
 
       
