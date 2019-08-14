@@ -6,20 +6,22 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>如何理解 边际 的含义？ | Hexo</title>
+  <title>IP数据报中的首部检验和如何发挥作用? | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="在阅读经济学书籍时经常能看到“边际”这个词，像边际成本、边际税率、边际价值等，好像它能和任何专有名词进行组合，书上也对其做了简单的解释，但是我看完后还是似懂非懂，对后续的阅读产生了障碍，所以决定自己查找资料，整理出“边际”的真正含义。">
-<meta name="keywords" content="经济学,笔记">
+  <meta name="description" content="在IP数据报的头部中的“首部检验和”字段，它的作用是为了校验数据报 头部 在传输中是否出错。那这种功能是如何实现的呢？">
+<meta name="keywords" content="计算机网络,科普">
 <meta property="og:type" content="article">
-<meta property="og:title" content="如何理解 边际 的含义？">
-<meta property="og:url" content="http://yoursite.com/2019/08/08/如何理解-边际-的含义？/index.html">
+<meta property="og:title" content="IP数据报中的首部检验和如何发挥作用?">
+<meta property="og:url" content="http://yoursite.com/2019/08/14/IP数据报中的首部检验和如何发挥作用/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="在阅读经济学书籍时经常能看到“边际”这个词，像边际成本、边际税率、边际价值等，好像它能和任何专有名词进行组合，书上也对其做了简单的解释，但是我看完后还是似懂非懂，对后续的阅读产生了障碍，所以决定自己查找资料，整理出“边际”的真正含义。">
+<meta property="og:description" content="在IP数据报的头部中的“首部检验和”字段，它的作用是为了校验数据报 头部 在传输中是否出错。那这种功能是如何实现的呢？">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-08-08T03:07:50.760Z">
+<meta property="og:image" content="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1565783445579&di=c36253fa7618137cf881f6a111527662&imgtype=jpg&src=http%3A%2F%2Fimg2.imgtn.bdimg.com%2Fit%2Fu%3D3881820622%2C174245373%26fm%3D214%26gp%3D0.jpg">
+<meta property="og:updated_time" content="2019-08-14T09:43:38.094Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="如何理解 边际 的含义？">
-<meta name="twitter:description" content="在阅读经济学书籍时经常能看到“边际”这个词，像边际成本、边际税率、边际价值等，好像它能和任何专有名词进行组合，书上也对其做了简单的解释，但是我看完后还是似懂非懂，对后续的阅读产生了障碍，所以决定自己查找资料，整理出“边际”的真正含义。">
+<meta name="twitter:title" content="IP数据报中的首部检验和如何发挥作用?">
+<meta name="twitter:description" content="在IP数据报的头部中的“首部检验和”字段，它的作用是为了校验数据报 头部 在传输中是否出错。那这种功能是如何实现的呢？">
+<meta name="twitter:image" content="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1565783445579&di=c36253fa7618137cf881f6a111527662&imgtype=jpg&src=http%3A%2F%2Fimg2.imgtn.bdimg.com%2Fit%2Fu%3D3881820622%2C174245373%26fm%3D214%26gp%3D0.jpg">
   
     <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -175,37 +177,36 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-如何理解-边际-的含义？" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-IP数据报中的首部检验和如何发挥作用" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      如何理解 边际 的含义？
+      IP数据报中的首部检验和如何发挥作用?
     </h1>
   
 
         
-        <a href="/2019/08/08/如何理解-边际-的含义？/" class="archive-article-date">
-  	<time datetime="2019-08-08T02:23:30.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-08-08</time>
+        <a href="/2019/08/14/IP数据报中的首部检验和如何发挥作用/" class="archive-article-date">
+  	<time datetime="2019-08-14T08:53:28.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-08-14</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>在阅读经济学书籍时经常能看到“边际”这个词，像边际成本、边际税率、边际价值等，好像它能和任何专有名词进行组合，书上也对其做了简单的解释，但是我看完后还是似懂非懂，对后续的阅读产生了障碍，所以决定自己查找资料，整理出“边际”的真正含义。<br> <a id="more"></a></p>
+        <p>在IP数据报的头部中的“首部检验和”字段，它的作用是为了校验数据报 <em>头部</em> 在传输中是否出错。那这种功能是如何实现的呢？</p>
+<a id="more"></a>
+
 <hr>
-<p>首先我们来看书上对这个词的解释：</p>
-<blockquote>
-<p>边际量即改变一单位自变量所带来的因变量的变化量，即Δy/Δx。</p>
-</blockquote>
-<p>学过高等数学的都知道，当自变量变化量趋向于无穷小时，上式就表示导函数。含义就是对现有的计划行动的微笑增量调整会对结果产生影响的大小。因为经济事物总是在各种影响因素下不断变动的量，所以边际量就成为人们做出决定时需要考虑的重要参数。这也就是经济学十大原理之三——<em>理性人考虑边际量</em></p>
-<p>这样看还是比较抽象，让我们以边际税率为例，来看看它的真正含义：<br>假设现在政府对0~5w元的收入征收20%的税，对超过5w元的部分征收50%的税，如果一个人的收入为6w元，那么对他来说：<br>平均税率=（1w+0.5w）/6w = 25%<br>边际税率 = 50%</p>
-<blockquote>
-<p>上式表明平均税率衡量了收入中纳税的比例。而边际税率表示该纳税人再多赚1元，这个1美元就适用50%的税率，所以当人们考虑是否要多工作多赚点钱时，就要考虑我多赚的钱一半都给了政府，这样值不值得。</p>
-</blockquote>
+<h2 id="下面结合一张图来说明（图片来源网络）："><a href="#下面结合一张图来说明（图片来源网络）：" class="headerlink" title="下面结合一张图来说明（图片来源网络）："></a>下面结合一张图来说明（图片来源网络）：</h2><p><img src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1565783445579&di=c36253fa7618137cf881f6a111527662&imgtype=jpg&src=http%3A%2F%2Fimg2.imgtn.bdimg.com%2Fit%2Fu%3D3881820622%2C174245373%26fm%3D214%26gp%3D0.jpg" alt="首部校验和算法"><br>在说明之前要补充一个前提就是:<em>IP数据报的长度总是4字节的整数倍</em></p>
+<h3 id="发送端："><a href="#发送端：" class="headerlink" title="发送端："></a>发送端：</h3><p>首先我们将检验和字段的16位全置0，因为我们补充的前提，所以我们可以将头部的数据按16位依次取出，然后反码算术运算求和。这里的算法和正常的加法一样，0和0相加是0，0和1相加是1，1和1相加是0，但要产生一个进位1，加到下一列。如果最高位相加后产生进位，则最后得到的结果要加1。求和过后再求其反码，得到的就是我们发送端的16位首部检验和。</p>
+<hr>
+<h3 id="接收端："><a href="#接收端：" class="headerlink" title="接收端："></a>接收端：</h3><p>在接收端，我们按照发送端相同的算法，将接收到的头部的数据按16位依次取出进行反码算术运算求和，得到的结果进行取反，如果最后的结果为0，则说明头部传输未出错（也可以对得到的结果不取反，那此时就应该判断结果是否全为1）。如果不为0，就丢弃此数据报。</p>
+<hr>
+<h3 id="补充："><a href="#补充：" class="headerlink" title="补充："></a>补充：</h3><p>现在有个小问题就是我们知道数据报头部中存在生存时间TTL字段，此字段每经过一个路由器就会减1，那岂不是最后结果肯定不为0，首部检验和还有什么意义呢？<br>答案是当初设计的人十分聪明，他设置每经过一个路由器TTL减1，那首部检验和字段就相应加1，这样就抵消了TTL字段的变化问题，首部检验和依然能够发挥作用！</p>
 
       
 
@@ -240,11 +241,11 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">经济学</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">计算机网络</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">笔记</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">科普</a>
         		</li>
       		
 		</ul>
@@ -256,7 +257,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="/categories/经济学//" class="article-tag-list-link color5">-经济学</a>
+        			<a href="/categories/计算机网络//" class="article-tag-list-link color1">计算机网络</a>
         		</li>
       		
 		</ul>
@@ -311,7 +312,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2019/08/08/如何理解-边际-的含义？/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2019/08/14/IP数据报中的首部检验和如何发挥作用/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -325,18 +326,9 @@
   
 <nav id="article-nav">
   
-    <a href="/2019/08/14/IP数据报中的首部检验和如何发挥作用/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          IP数据报中的首部检验和如何发挥作用?
-        
-      </div>
-    </a>
   
-  
-    <a href="/2019/08/06/手机号码是如何构成的？/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">手机号码是如何构成的？</div>
+    <a href="/2019/08/08/如何理解-边际-的含义？/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">如何理解 边际 的含义？</div>
       <i class="icon-circle-right"></i>
     </a>
   
