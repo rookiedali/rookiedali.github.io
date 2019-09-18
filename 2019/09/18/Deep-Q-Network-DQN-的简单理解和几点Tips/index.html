@@ -6,15 +6,24 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Tag: 移动通信 | Hexo</title>
+  <title>Deep Q Network(DQN)的简单理解和几点Tips | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Hexo">
-<meta property="og:url" content="http://yoursite.com/tags/移动通信/index.html">
+  <meta name="description" content="最近看论文时了解了一个新的机器学习分支-Deep Q-learning Netwokr（DQN），所以自己上网查找整理了一些此算法的基本概念及其细节实现的tips.">
+<meta name="keywords" content="DQN,深度学习,神经网络">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Deep Q Network(DQN)的简单理解和几点Tips">
+<meta property="og:url" content="http://yoursite.com/2019/09/18/Deep-Q-Network-DQN-的简单理解和几点Tips/index.html">
 <meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="最近看论文时了解了一个新的机器学习分支-Deep Q-learning Netwokr（DQN），所以自己上网查找整理了一些此算法的基本概念及其细节实现的tips.">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/13876065-372613db5ae7fdc6.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/646/format/webp">
+<meta property="og:image" content="https://math.jianshu.com/math?formula=Q(s_t%2Ca_t)%3Dr%2B%5Cgamma_%7B%7Dmax_aQ(s_%7Bt%2B1%7D%2Ca_%7Bt%2B1%7D)">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/13876065-a263846e598eb1c0.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/444/format/webp">
+<meta property="og:updated_time" content="2019-09-18T05:18:10.413Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Hexo">
+<meta name="twitter:title" content="Deep Q Network(DQN)的简单理解和几点Tips">
+<meta name="twitter:description" content="最近看论文时了解了一个新的机器学习分支-Deep Q-learning Netwokr（DQN），所以自己上网查找整理了一些此算法的基本概念及其细节实现的tips.">
+<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/13876065-372613db5ae7fdc6.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/646/format/webp">
   
     <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -170,75 +179,200 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-Deep-Q-Network-DQN-的简单理解和几点Tips" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2019" class="archive-year">2019</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/08/06/手机号码是如何构成的？/" class="archive-article-date">
-  	<time datetime="2019-08-06T08:21:37.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-08-06</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/08/06/手机号码是如何构成的？/">手机号码是如何构成的？</a>
+    <h1 class="article-title" itemprop="name">
+      Deep Q Network(DQN)的简单理解和几点Tips
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
+        
+        <a href="/2019/09/18/Deep-Q-Network-DQN-的简单理解和几点Tips/" class="archive-article-date">
+  	<time datetime="2019-09-18T01:32:12.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-09-18</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>最近看论文时了解了一个新的机器学习分支-Deep Q-learning Netwokr（DQN），所以自己上网查找整理了一些此算法的基本概念及其细节实现的tips.</p>
+<a id="more"></a>
+<h3 id="一-什么是DQN？"><a href="#一-什么是DQN？" class="headerlink" title="一.什么是DQN？"></a>一.什么是DQN？</h3><p>首先看名字可以知道，DQN是将DEEP LEARNING 和Q-learning相结合,所以先来简单介绍一下这两者的概念.</p>
+<h4 id="1-Q-learning"><a href="#1-Q-learning" class="headerlink" title="1.Q-learning"></a>1.Q-learning</h4><p>Q学习作为强化学习的分支，继承了强化学习的模型。如下图：<br><img src="https://upload-images.jianshu.io/upload_images/13876065-372613db5ae7fdc6.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/646/format/webp" alt="image1"><br>可以看出强化学习中存在一个基本的数值对（状态S,动作a），一开始环境处于S0状态，这时agent做出一个动作a0，环境受动作影响状态改变到S1并给agent一个反馈reward，告诉它你刚刚这个动作a0对我处于状态S0的影响是好是坏，相当于奖惩值，就这样不断循环直到事件结束.<br>Q学习算法中的Q(s,a)函数表示在状态s采取行动a并在之后采取最优动作策略的未来累计奖励（未来奖励是要打折扣的）。<br>而Q学习算法就是用贝尔曼公式不断的迭代更新Q函数，直到找到最优的策略。<br><img src="https://math.jianshu.com/math?formula=Q(s_t%2Ca_t)%3Dr%2B%5Cgamma_%7B%7Dmax_aQ(s_%7Bt%2B1%7D%2Ca_%7Bt%2B1%7D)" alt="image2"></p>
+<h4 id="2-深度学习中的神经网络"><a href="#2-深度学习中的神经网络" class="headerlink" title="2.深度学习中的神经网络"></a>2.深度学习中的神经网络</h4><p>在上面的介绍中，可以看出Q学习需要使用表格来存储每一对（s，a）并记录对应Q值，而当状态空间过大或可选动作过多时都会对算法性能有极大的影响，例如在我看到的paper中应用场景是多信道的接入问题，一旦信道数量增加相应的状态空间会呈指数增长，可选动作也会线性增长，显然将Q学习用于处理这些问题就不实际了。所以我们引入了深度学习中的神经网络来解决这个问题.<br>神经网络有一个很重要的特点就是’端到端’,给定输入经过神经网络的分析就可以得到输出。应用到Q学习上就可以有两种方法：</p>
+<blockquote>
+<blockquote>
+<p>①给定状态和动作作为输入，经过分析得到对应的Q值<br>②只给定状态值，那么输出的就是所有可能动作对应的Q值，直接选择最大的那一个作为下一步的动作</p>
+</blockquote>
+</blockquote>
+<p>一般DQN选择的是第二种，更新过程如图：<br><img src="https://upload-images.jianshu.io/upload_images/13876065-a263846e598eb1c0.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/444/format/webp" alt="image3"></p>
+<h3 id="二-DQN中的几点Tip"><a href="#二-DQN中的几点Tip" class="headerlink" title="二.DQN中的几点Tip"></a>二.DQN中的几点Tip</h3><h4 id="Tip1-Target-Netweork"><a href="#Tip1-Target-Netweork" class="headerlink" title="Tip1 - Target Netweork"></a>Tip1 - Target Netweork</h4><p>其实在一个DQN中是有两个神经网络的，一开始两个神经网络的参数是相同的，其中一个参数相对固定的就是target-net，用来获取Q-target值，而另一个不断更新的网络用来获取Q-估计值，但每过N次动作后都会将估计网络的参数同步给目标网络，所以称Target-network是相对固定的.这样做的原因是因为，Q-target和Q估计两者之间的差就是损失函数，我们就是要使两者的差不断缩小，所以需要将target相对固定住这样方便收敛.</p>
+<h4 id="Tip2-Exploration机制"><a href="#Tip2-Exploration机制" class="headerlink" title="Tip2 - Exploration机制"></a>Tip2 - Exploration机制</h4><p>假设我们在收集数据时，面对的是一个全新的状态S0，从来没有在此状态下采取过任何动作（假设有动作a1，a2）。所以此时Q(s0,a1),Q(s0,a2)都是0，而当我们尝试了动作a2后发现其Q值为1。于是DQN就会认为在此状态s0时采取动作a2是最优的，因此之后每次遇到状态s0agent都会采取动作a2，而不考虑a1，这显然是不合理的。所以我们引入了Exploration机制，（Exploration机制有好几种算法,这里介绍paper提到的贪婪算法）</p>
+<p>贪婪算法十分好理解，就是算法中引入一个参数ε属于(0,1)作为贪婪率，每种状态下我们都有ε的概率随机采取最优动作之外的可选动作，这样就可以避免发生上面提到的问题了</p>
+<h4 id="Tip3-Replay-Buffer"><a href="#Tip3-Replay-Buffer" class="headerlink" title="Tip3 - Replay Buffer"></a>Tip3 - Replay Buffer</h4><p>①将每笔experience（st，at，rt，st+1）放在Buffer中（exp值可能相同但来自不同的策略π）<br>②训练时每次从Buffer中sample一个batch出来训练<br>③更新Q值<br> 好处：充分利用数据<br> 降低batch内的数据相关性，训练结果稳定</p>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">移动通信</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">DQN</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">科普</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">深度学习</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">神经网络</a>
         		</li>
       		
 		</ul>
 	</div>
 
-          
+      
 	<div class="article-category tagcloud">
 		<i class="icon-book icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="/categories/移动通信//" class="article-tag-list-link color5">移动通信</a>
+        			<a href="/categories/机器学习//" class="article-tag-list-link color1">-机器学习</a>
         		</li>
       		
 		</ul>
 	</div>
 
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2019/09/18/Deep-Q-Network-DQN-的简单理解和几点Tips/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
+  
+<nav id="article-nav">
   
   
-    </div></section>
+    <a href="/2019/08/30/为何看完令人期待的-双马会-很失望/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">为何看完令人期待的&#39;双马会&#39;很失望?</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+  
+  
   
 
-    
+  
+
+  
+
+  
 
 
           </div>
@@ -261,9 +395,9 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
+		isPost: true,
 		isArchive: false,
-		isTag: true,
+		isTag: false,
 		isCategory: false,
 		open_in_new: false,
 		toc_hide_index: true,
