@@ -16,14 +16,14 @@
 <meta property="og:site_name" content="Hexo">
 <meta property="og:description" content="最近看论文时了解了一个新的机器学习分支-Deep Q-learning Netwokr（DQN），所以自己上网查找整理了一些此算法的基本概念及其细节实现的tips.">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/13876065-372613db5ae7fdc6.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/646/format/webp">
-<meta property="og:image" content="https://math.jianshu.com/math?formula=Q(s_t%2Ca_t)%3Dr%2B%5Cgamma_%7B%7Dmax_aQ(s_%7Bt%2B1%7D%2Ca_%7Bt%2B1%7D)">
-<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/13876065-a263846e598eb1c0.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/444/format/webp">
-<meta property="og:updated_time" content="2019-09-18T05:18:10.413Z">
+<meta property="og:image" content="https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=4013329535,3344099263&fm=11&gp=0.jpg">
+<meta property="og:image" content="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1568981357043&di=3c8be680dc9a36d008215c0fd3b7dbf8&imgtype=0&src=http%3A%2F%2Fzkres2.myzaker.com%2F201707%2F5971ce0f1bc8e09828000011_640.jpg">
+<meta property="og:image" content="https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=1338944573,3385758670&fm=26&gp=0.jpg">
+<meta property="og:updated_time" content="2019-09-20T09:25:03.057Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Deep Q Network(DQN)的简单理解和几点Tips">
 <meta name="twitter:description" content="最近看论文时了解了一个新的机器学习分支-Deep Q-learning Netwokr（DQN），所以自己上网查找整理了一些此算法的基本概念及其细节实现的tips.">
-<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/13876065-372613db5ae7fdc6.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/646/format/webp">
+<meta name="twitter:image" content="https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=4013329535,3344099263&fm=11&gp=0.jpg">
   
     <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -202,14 +202,14 @@
         <p>最近看论文时了解了一个新的机器学习分支-Deep Q-learning Netwokr（DQN），所以自己上网查找整理了一些此算法的基本概念及其细节实现的tips.</p>
 <a id="more"></a>
 <h3 id="一-什么是DQN？"><a href="#一-什么是DQN？" class="headerlink" title="一.什么是DQN？"></a>一.什么是DQN？</h3><p>首先看名字可以知道，DQN是将DEEP LEARNING 和Q-learning相结合,所以先来简单介绍一下这两者的概念.</p>
-<h4 id="1-Q-learning"><a href="#1-Q-learning" class="headerlink" title="1.Q-learning"></a>1.Q-learning</h4><p>Q学习作为强化学习的分支，继承了强化学习的模型。如下图：<br><img src="https://upload-images.jianshu.io/upload_images/13876065-372613db5ae7fdc6.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/646/format/webp" alt="image1"><br>可以看出强化学习中存在一个基本的数值对（状态S,动作a），一开始环境处于S0状态，这时agent做出一个动作a0，环境受动作影响状态改变到S1并给agent一个反馈reward，告诉它你刚刚这个动作a0对我处于状态S0的影响是好是坏，相当于奖惩值，就这样不断循环直到事件结束.<br>Q学习算法中的Q(s,a)函数表示在状态s采取行动a并在之后采取最优动作策略的未来累计奖励（未来奖励是要打折扣的）。<br>而Q学习算法就是用贝尔曼公式不断的迭代更新Q函数，直到找到最优的策略。<br><img src="https://math.jianshu.com/math?formula=Q(s_t%2Ca_t)%3Dr%2B%5Cgamma_%7B%7Dmax_aQ(s_%7Bt%2B1%7D%2Ca_%7Bt%2B1%7D)" alt="image2"></p>
+<h4 id="1-Q-learning"><a href="#1-Q-learning" class="headerlink" title="1.Q-learning"></a>1.Q-learning</h4><p>Q学习作为强化学习的分支，继承了强化学习的模型。如下图：<br><img src="https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=4013329535,3344099263&fm=11&gp=0.jpg" alt="image1"><br>可以看出强化学习中存在一个基本的数值对（状态S,动作a），一开始环境处于S0状态，这时agent做出一个动作a0，环境受动作影响状态改变到S1并给agent一个反馈reward，告诉它你刚刚这个动作a0对我处于状态S0的影响是好是坏，相当于奖惩值，就这样不断循环直到事件结束.<br>Q学习算法中的Q(s,a)函数表示在状态s采取行动a并在之后采取最优动作策略的未来累计奖励（未来奖励是要打折扣的）。<br>而Q学习算法就是用贝尔曼公式不断的迭代更新Q函数，直到找到最优的策略。<br><img src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1568981357043&di=3c8be680dc9a36d008215c0fd3b7dbf8&imgtype=0&src=http%3A%2F%2Fzkres2.myzaker.com%2F201707%2F5971ce0f1bc8e09828000011_640.jpg" alt="image2"></p>
 <h4 id="2-深度学习中的神经网络"><a href="#2-深度学习中的神经网络" class="headerlink" title="2.深度学习中的神经网络"></a>2.深度学习中的神经网络</h4><p>在上面的介绍中，可以看出Q学习需要使用表格来存储每一对（s，a）并记录对应Q值，而当状态空间过大或可选动作过多时都会对算法性能有极大的影响，例如在我看到的paper中应用场景是多信道的接入问题，一旦信道数量增加相应的状态空间会呈指数增长，可选动作也会线性增长，显然将Q学习用于处理这些问题就不实际了。所以我们引入了深度学习中的神经网络来解决这个问题.<br>神经网络有一个很重要的特点就是’端到端’,给定输入经过神经网络的分析就可以得到输出。应用到Q学习上就可以有两种方法：</p>
 <blockquote>
 <blockquote>
 <p>①给定状态和动作作为输入，经过分析得到对应的Q值<br>②只给定状态值，那么输出的就是所有可能动作对应的Q值，直接选择最大的那一个作为下一步的动作</p>
 </blockquote>
 </blockquote>
-<p>一般DQN选择的是第二种，更新过程如图：<br><img src="https://upload-images.jianshu.io/upload_images/13876065-a263846e598eb1c0.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/444/format/webp" alt="image3"></p>
+<p>图示如下：<br><img src="https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=1338944573,3385758670&fm=26&gp=0.jpg" alt="image2"><br>一般DQN选择的是第二种</p>
 <h3 id="二-DQN中的几点Tip"><a href="#二-DQN中的几点Tip" class="headerlink" title="二.DQN中的几点Tip"></a>二.DQN中的几点Tip</h3><h4 id="Tip1-Target-Netweork"><a href="#Tip1-Target-Netweork" class="headerlink" title="Tip1 - Target Netweork"></a>Tip1 - Target Netweork</h4><p>其实在一个DQN中是有两个神经网络的，一开始两个神经网络的参数是相同的，其中一个参数相对固定的就是target-net，用来获取Q-target值，而另一个不断更新的网络用来获取Q-估计值，但每过N次动作后都会将估计网络的参数同步给目标网络，所以称Target-network是相对固定的.这样做的原因是因为，Q-target和Q估计两者之间的差就是损失函数，我们就是要使两者的差不断缩小，所以需要将target相对固定住这样方便收敛.</p>
 <h4 id="Tip2-Exploration机制"><a href="#Tip2-Exploration机制" class="headerlink" title="Tip2 - Exploration机制"></a>Tip2 - Exploration机制</h4><p>假设我们在收集数据时，面对的是一个全新的状态S0，从来没有在此状态下采取过任何动作（假设有动作a1，a2）。所以此时Q(s0,a1),Q(s0,a2)都是0，而当我们尝试了动作a2后发现其Q值为1。于是DQN就会认为在此状态s0时采取动作a2是最优的，因此之后每次遇到状态s0agent都会采取动作a2，而不考虑a1，这显然是不合理的。所以我们引入了Exploration机制，（Exploration机制有好几种算法,这里介绍paper提到的贪婪算法）</p>
 <p>贪婪算法十分好理解，就是算法中引入一个参数ε属于(0,1)作为贪婪率，每种状态下我们都有ε的概率随机采取最优动作之外的可选动作，这样就可以避免发生上面提到的问题了</p>
@@ -465,6 +465,14 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">计算机网络</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">科普</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">DQN</a>
               </li>
              
@@ -474,6 +482,18 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">神经网络</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">经济学</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">笔记</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">移动通信</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -497,31 +517,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">经济学</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">笔记</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">移动通信</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">科普</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">荣耀屏</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">电视</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">计算机网络</a>
               </li>
             
             <div class="clearfix"></div>
