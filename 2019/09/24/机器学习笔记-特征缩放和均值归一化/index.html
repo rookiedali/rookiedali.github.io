@@ -6,15 +6,20 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Tag: DQN | 胡大力的个人blog</title>
+  <title>机器学习笔记--特征缩放和均值归一化 | 胡大力的个人blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="胡大力的个人blog">
-<meta property="og:url" content="http://yoursite.com/tags/DQN/index.html">
+  <meta name="description" content="最近在做机器学习作业时，发现答案对数据进行了预处理，其中就包括特征缩放和均值归一化；而当时看吴恩达老师这部分视频时只记住了大概而忘记具体应该如何使用，而且好像把两个概念记混了，所以决定回头整理总结一下。">
+<meta name="keywords" content="数据预处理,特征缩放,均值归一化">
+<meta property="og:type" content="article">
+<meta property="og:title" content="机器学习笔记--特征缩放和均值归一化">
+<meta property="og:url" content="http://yoursite.com/2019/09/24/机器学习笔记-特征缩放和均值归一化/index.html">
 <meta property="og:site_name" content="胡大力的个人blog">
+<meta property="og:description" content="最近在做机器学习作业时，发现答案对数据进行了预处理，其中就包括特征缩放和均值归一化；而当时看吴恩达老师这部分视频时只记住了大概而忘记具体应该如何使用，而且好像把两个概念记混了，所以决定回头整理总结一下。">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-09-24T13:15:44.769Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="胡大力的个人blog">
+<meta name="twitter:title" content="机器学习笔记--特征缩放和均值归一化">
+<meta name="twitter:description" content="最近在做机器学习作业时，发现答案对数据进行了预处理，其中就包括特征缩放和均值归一化；而当时看吴恩达老师这部分视频时只记住了大概而忘记具体应该如何使用，而且好像把两个概念记混了，所以决定回头整理总结一下。">
   
     <link rel="alternative" href="/atom.xml" title="胡大力的个人blog" type="application/atom+xml">
   
@@ -166,79 +171,218 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-机器学习笔记-特征缩放和均值归一化" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2019" class="archive-year">2019</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/09/18/Deep-Q-Network-DQN-的简单理解和几点Tips/" class="archive-article-date">
-  	<time datetime="2019-09-18T01:32:12.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-09-18</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/09/18/Deep-Q-Network-DQN-的简单理解和几点Tips/">Deep Q Network(DQN)的简单理解和几点Tips</a>
+    <h1 class="article-title" itemprop="name">
+      机器学习笔记--特征缩放和均值归一化
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
+        
+        <a href="/2019/09/24/机器学习笔记-特征缩放和均值归一化/" class="archive-article-date">
+  	<time datetime="2019-09-24T12:27:21.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-09-24</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>最近在做机器学习作业时，发现答案对数据进行了预处理，其中就包括特征缩放和均值归一化；而当时看吴恩达老师这部分视频时只记住了大概而忘记具体应该如何使用，而且好像把两个概念记混了，所以决定回头整理总结一下。</p>
+<a id="more"></a>
+
+<h3 id="一、定义"><a href="#一、定义" class="headerlink" title="一、定义"></a>一、定义</h3><ul>
+<li><p>特征缩放<br>通常就是将特征的取值约束要-1至+1的范围内，当然并不是强制要求只要和-1~+1这个范围接近，处于一个数量级上就可以。一般的做法就是将特征值除以最大值</p>
+</li>
+<li><p>均值归一化<br>指的是让特征值具有均值为0，方差为1的状态，一般的做法是：(特征值-平均值)/标准差</p>
+</li>
+<li><p>从定义可以看出两者都是在多变量的情况下对 <em>某个特征</em> 进行缩放 ，只是处理的手段和目的不一样。</p>
+</li>
+</ul>
+<h3 id="二、好处"><a href="#二、好处" class="headerlink" title="二、好处"></a>二、好处</h3><p>谈好处之前，先让我们看看这两者的应用的背景，拿我的作业举例，训练集中包含三列数据分别是：房间数，房子平方数，房屋价格。这是一道明显的多变量线性回归题，而其中房子平方数这个特征比房间数特征大了两个数量级，如果不对其做处理的话，就会导致它在学习算法中占主导位置，那么学习器就无法像预期地进行工作</p>
+<ul>
+<li>好处一：提升精度<br>就像刚才提到的，进行了归一化处理后，让处于不同维度的特征具有了一定的可比性，从而大大提高了分类器的精度。</li>
+<li>好处二：加快收敛<br>对于线性model来说，数据归一化后，最优解的寻优过程明显会变得平缓，更容易快速且正确的收敛到最优解。</li>
+</ul>
+<h3 id="对比分析"><a href="#对比分析" class="headerlink" title="对比分析"></a>对比分析</h3><p>其实从两种方法对数据的处理方式可以看出，均值归一化更加合理，而在实际中也确实更加常用，原因如下：<br>1、均值归一化更好的保持了样本间距。而特征缩放则强行将所有的数据“挤”在一起特别是当数据中出现一个异常值，例如1,2，3,10000，那如果用特征缩放就是将所有数据除以1000，结果就是正常的值被缩放到了一起，这显然是不合理的。<br>2、均值归一化更符合统计学假设<br>对于一个数值特征，很大可能它是服从正态分布的。标准化其实是基于这个隐含假设，只不过是略施小技，将这个正态分布调整为均值为0，方差为1的标准正态分布而已。</p>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢支持<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">DQN</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">数据预处理</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">深度学习</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">特征缩放</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">神经网络</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">均值归一化</a>
         		</li>
       		
 		</ul>
 	</div>
 
-          
+      
 	<div class="article-category tagcloud">
 		<i class="icon-book icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="/categories/机器学习//" class="article-tag-list-link color1">-机器学习</a>
+        			<a href="/categories/机器学习//" class="article-tag-list-link color5">机器学习</a>
         		</li>
       		
 		</ul>
 	</div>
 
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2019/09/24/机器学习笔记-特征缩放和均值归一化/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
+  
+<nav id="article-nav">
   
   
-    </div></section>
+    <a href="/2019/09/18/Deep-Q-Network-DQN-的简单理解和几点Tips/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Deep Q Network(DQN)的简单理解和几点Tips</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+  
+  
   
 
-    
+  
+
+  
+
+  
+  <div id="gitment-ctn"></div> 
+<link rel="stylesheet" href="//imsun.github.io/gitment/style/default.css">
+<script src="//imsun.github.io/gitment/dist/gitment.browser.js"></script>
+<script>
+var gitment = new Gitment({
+  id: "http://yoursite.com/2019/09/24/机器学习笔记-特征缩放和均值归一化/",
+  owner: 'rookiedali',
+  repo: 'rookiedali.github.io',
+  oauth: {
+    client_id: '9b5e06cfd8ef9b42644a',
+    client_secret: '6760f0767077a134fe2369f7697c5e944d4f97d4',
+  },
+})
+gitment.render('gitment-ctn')
+</script>
+  
 
 
           </div>
@@ -261,9 +405,9 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
+		isPost: true,
 		isArchive: false,
-		isTag: true,
+		isTag: false,
 		isCategory: false,
 		open_in_new: ture,
 		toc_hide_index: true,
