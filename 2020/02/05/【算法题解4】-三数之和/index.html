@@ -6,15 +6,20 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Tag: 计算机网络 | 胡大力的个人blog</title>
+  <title>【算法题解4】:三数之和 | 胡大力的个人blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="胡大力的个人blog">
-<meta property="og:url" content="http://yoursite.com/tags/计算机网络/index.html">
+  <meta name="description" content="算法题解第四题:三数之和">
+<meta name="keywords" content="双指针,三层循环">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【算法题解4】:三数之和">
+<meta property="og:url" content="http://yoursite.com/2020/02/05/【算法题解4】-三数之和/index.html">
 <meta property="og:site_name" content="胡大力的个人blog">
+<meta property="og:description" content="算法题解第四题:三数之和">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2020-02-05T09:08:35.735Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="胡大力的个人blog">
+<meta name="twitter:title" content="【算法题解4】:三数之和">
+<meta name="twitter:description" content="算法题解第四题:三数之和">
   
     <link rel="alternative" href="/atom.xml" title="胡大力的个人blog" type="application/atom+xml">
   
@@ -166,75 +171,211 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-【算法题解4】-三数之和" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2019" class="archive-year">2019</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/08/14/IP数据报中的首部检验和如何发挥作用/" class="archive-article-date">
-  	<time datetime="2019-08-14T08:53:28.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-08-14</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/08/14/IP数据报中的首部检验和如何发挥作用/">IP数据报中的首部检验和如何发挥作用?</a>
+    <h1 class="article-title" itemprop="name">
+      【算法题解4】:三数之和
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
+        
+        <a href="/2020/02/05/【算法题解4】-三数之和/" class="archive-article-date">
+  	<time datetime="2020-02-05T08:25:30.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-02-05</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>算法题解第四题:三数之和</p>
+<a id="more"></a>
+<h3 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h3><p>给定一个包含 n 个整数的数组 nums，判断 nums 中是否存在三个元素 a，b，c ，使得 a + b + c = 0 ？找出所有满足条件且不重复的三元组。</p>
+<p>注意：答案中不可以包含重复的三元组。<br>示例：</p>
+<p>给定数组 nums = [-1, 0, 1, 2, -1, -4]，</p>
+<p>满足要求的三元组集合为：<br>[<br>  [-1, 0, 1],<br>  [-1, -1, 2]<br>]</p>
+<p>来源：力扣（LeetCode）<br>链接：<a href="https://leetcode-cn.com/problems/3sum" target="_blank" rel="noopener">https://leetcode-cn.com/problems/3sum</a></p>
+<p>###解法一：暴力法<br>拿到题目首先想到之前做过的两数之和，就是遍历所有的可能组合，保存满足条件的组合并去除重复的组合即可。这题是三数之和所以需要用到三重循环。实现如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">def threeSum(nums: List[int]):</span><br><span class="line">        answer = []</span><br><span class="line">        nums.sort()</span><br><span class="line">        for x in range(len(nums)):</span><br><span class="line">            for y in range(x+1,len(nums)):</span><br><span class="line">                for z in range(y+1,len(nums)):</span><br><span class="line">                    if nums[x]+nums[y]+nums[z] == 0:</span><br><span class="line">                        temp=[nums[x],nums[y],nums[z]]</span><br><span class="line">                        if temp  not in  answer:</span><br><span class="line">                            answer.append(temp)</span><br><span class="line">        return answer</span><br></pre></td></tr></table></figure>
+
+<p>测试简单用例可以通过，但是提交时显示超过时间限制。于是去翻题解大佬们的解法，记录如下。</p>
+<h3 id="解法二：排序＋双指针"><a href="#解法二：排序＋双指针" class="headerlink" title="解法二：排序＋双指针"></a>解法二：排序＋双指针</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">def threeSum(nums: List[int]):</span><br><span class="line">        ans=[] #用来保存结果的列表</span><br><span class="line">        if(not nums or len(nums)&lt;3): #排除列表为空或元素数小于3的特例</span><br><span class="line">            return []</span><br><span class="line">        nums.sort() #有小到大排序方便后续的判断</span><br><span class="line">        for i in range(len(nums)):</span><br><span class="line">            if(nums[i]&gt;0): #如果最小的i大于0，那么肯定无法找到满足条件的结果</span><br><span class="line">                return ans</span><br><span class="line">            if(i&gt;0 and nums[i]==nums[i-1]): #如果当前元素与上个元素相同，则结果肯定重复，可以跳过</span><br><span class="line">                continue</span><br><span class="line">            L=i+1 #设定左指针</span><br><span class="line">            R=len(nums)-1 #设定右指针</span><br><span class="line">            while(L&lt;R): #循环判断</span><br><span class="line">                if(nums[i]+nums[L]+nums[R]==0): #当满足条件时保存结果进ans中</span><br><span class="line">                    ans.append([nums[i],nums[L],nums[R]])</span><br><span class="line">                    while(L&lt;R and nums[L]==nums[L+1]): #去除重复结果</span><br><span class="line">                        L=L+1</span><br><span class="line">                    while(L&lt;R and nums[R]==nums[R-1]): #去除重复结果</span><br><span class="line">                        R=R-1</span><br><span class="line">                    L=L+1</span><br><span class="line">                    R=R-1</span><br><span class="line">                elif(nums[i]+nums[L]+nums[R]&gt;0): #当结果大于0时，说明右指针元素过大，移动右指针</span><br><span class="line">                    R=R-1</span><br><span class="line">                else: #当结果小于0时，说明左指针元素过小，移动左指针</span><br><span class="line">                    L=L+1</span><br><span class="line">        return ans</span><br></pre></td></tr></table></figure>
+
+<p>解法是借鉴题解中的大佬写得，注释由个人理解所写。</p>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢支持<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">计算机网络</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">双指针</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">科普</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">三层循环</a>
         		</li>
       		
 		</ul>
 	</div>
 
-          
+      
 	<div class="article-category tagcloud">
 		<i class="icon-book icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="/categories/计算机网络//" class="article-tag-list-link color1">计算机网络</a>
+        			<a href="/categories/算法题解//" class="article-tag-list-link color5">算法题解</a>
         		</li>
       		
 		</ul>
 	</div>
 
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2020/02/05/【算法题解4】-三数之和/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
+  
+<nav id="article-nav">
   
   
-    </div></section>
+    <a href="/2020/02/04/【算法题解3】罗马数字转整数/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">【算法题解3】罗马数字转整数</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+  
+  
   
 
-    
+  
+
+  
+
+  
+  <div id="gitment-ctn"></div> 
+<link rel="stylesheet" href="//imsun.github.io/gitment/style/default.css">
+<script src="//imsun.github.io/gitment/dist/gitment.browser.js"></script>
+<script>
+var gitment = new Gitment({
+  id: "http://yoursite.com/2020/02/05/【算法题解4】-三数之和/",
+  owner: 'rookiedali',
+  repo: 'rookiedali.github.io',
+  oauth: {
+    client_id: '9b5e06cfd8ef9b42644a',
+    client_secret: '6760f0767077a134fe2369f7697c5e944d4f97d4',
+  },
+})
+gitment.render('gitment-ctn')
+</script>
+  
 
 
           </div>
@@ -257,9 +398,9 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
+		isPost: true,
 		isArchive: false,
-		isTag: true,
+		isTag: false,
 		isCategory: false,
 		open_in_new: ture,
 		toc_hide_index: true,

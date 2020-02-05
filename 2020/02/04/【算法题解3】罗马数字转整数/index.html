@@ -6,15 +6,20 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Tag: 计算机网络 | 胡大力的个人blog</title>
+  <title>【算法题解3】罗马数字转整数 | 胡大力的个人blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="胡大力的个人blog">
-<meta property="og:url" content="http://yoursite.com/tags/计算机网络/index.html">
+  <meta name="description" content="算法题解第三题：罗马数字转整数">
+<meta name="keywords" content="哈希表">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【算法题解3】罗马数字转整数">
+<meta property="og:url" content="http://yoursite.com/2020/02/04/【算法题解3】罗马数字转整数/index.html">
 <meta property="og:site_name" content="胡大力的个人blog">
+<meta property="og:description" content="算法题解第三题：罗马数字转整数">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2020-02-04T08:10:09.919Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="胡大力的个人blog">
+<meta name="twitter:title" content="【算法题解3】罗马数字转整数">
+<meta name="twitter:description" content="算法题解第三题：罗马数字转整数">
   
     <link rel="alternative" href="/atom.xml" title="胡大力的个人blog" type="application/atom+xml">
   
@@ -166,75 +171,222 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-【算法题解3】罗马数字转整数" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2019" class="archive-year">2019</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/08/14/IP数据报中的首部检验和如何发挥作用/" class="archive-article-date">
-  	<time datetime="2019-08-14T08:53:28.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-08-14</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/08/14/IP数据报中的首部检验和如何发挥作用/">IP数据报中的首部检验和如何发挥作用?</a>
+    <h1 class="article-title" itemprop="name">
+      【算法题解3】罗马数字转整数
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
+        
+        <a href="/2020/02/04/【算法题解3】罗马数字转整数/" class="archive-article-date">
+  	<time datetime="2020-02-04T07:47:43.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-02-04</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>算法题解第三题：罗马数字转整数</p>
+<a id="more"></a>
+<h3 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h3><p>罗马数字包含以下七种字符: I， V， X， L，C，D 和 M。<br>字符          数值<br>I             1<br>V             5<br>X             10<br>L             50<br>C             100<br>D             500<br>M             1000<br>例如， 罗马数字 2 写做 II ，即为两个并列的 1。12 写做 XII ，即为 X + II 。 27 写做  XXVII, 即为 XX + V + II 。</p>
+<p>通常情况下，罗马数字中小的数字在大的数字的右边。但也存在特例，例如 4 不写做 IIII，而是 IV。数字 1 在数字 5 的左边，所表示的数等于大数 5 减小数 1 得到的数值 4 。同样地，数字 9 表示为 IX。这个特殊的规则只适用于以下六种情况：</p>
+<p>I 可以放在 V (5) 和 X (10) 的左边，来表示 4 和 9。<br>X 可以放在 L (50) 和 C (100) 的左边，来表示 40 和 90。<br>C 可以放在 D (500) 和 M (1000) 的左边，来表示 400 和 900。<br>给定一个罗马数字，将其转换成整数。输入确保在 1 到 3999 的范围内。</p>
+<p>示例 1:</p>
+<p>输入: “III”<br>输出: 3<br>示例 2:</p>
+<p>输入: “IV”<br>输出: 4<br>示例 3:</p>
+<p>输入: “IX”<br>输出: 9<br>示例 4:</p>
+<p>输入: “LVIII”<br>输出: 58<br>解释: L = 50, V= 5, III = 3.<br>示例 5:</p>
+<p>输入: “MCMXCIV”<br>输出: 1994<br>解释: M = 1000, CM = 900, XC = 90, IV = 4.</p>
+<p>来源：力扣（LeetCode）<br>链接：<a href="https://leetcode-cn.com/problems/roman-to-integer" target="_blank" rel="noopener">https://leetcode-cn.com/problems/roman-to-integer</a></p>
+<h3 id="解法"><a href="#解法" class="headerlink" title="解法"></a>解法</h3><p>输入是罗马字，输出是整数，所以首先想到建立哈希表将数值和罗马字一一对应，问题在于如何处理特殊情况。一般情况下左边大于右边，所以可以按位相加，用temp来保存总数值；<br>特殊情况：</p>
+<blockquote>
+<p>规律1:当左边数小于右边时的特殊情况总结规律后发现将当前temp值加上当前位罗马数减去前一位罗马数既可得到正确数值<br>规律2：当前位罗马数小于后一位罗马数时temp减去当前位罗马数值；当前位罗马数大于后一位时temp加上当前位罗马数值</p>
+</blockquote>
+<h4 id="规律1对应代码："><a href="#规律1对应代码：" class="headerlink" title="规律1对应代码："></a>规律1对应代码：</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">def romanToInt(s: str):</span><br><span class="line">        dict = &#123;&apos;I&apos;:1,&apos;V&apos;:5,&apos;X&apos;:10,&apos;L&apos;:50,&apos;C&apos;:100,&apos;D&apos;:500,&apos;M&apos;:1000&#125;</span><br><span class="line">        temp = 0</span><br><span class="line">        for i in range(len(s)):</span><br><span class="line">            if i == 0 :</span><br><span class="line">                temp += dict[s[0]]</span><br><span class="line">            elif dict[s[i]] &gt; dict[s[i-1]]:</span><br><span class="line">                temp =temp +dict[s[i]] -2*dict[s[i-1]]</span><br><span class="line">            else:</span><br><span class="line">                temp += dict[s[i]]</span><br><span class="line">        return temp</span><br></pre></td></tr></table></figure>
+
+<h4 id="规律2对应代码："><a href="#规律2对应代码：" class="headerlink" title="规律2对应代码："></a>规律2对应代码：</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">def romanToInt2(s: str):</span><br><span class="line">        dict = &#123;&apos;I&apos;:1,&apos;V&apos;:5,&apos;X&apos;:10,&apos;L&apos;:50,&apos;C&apos;:100,&apos;D&apos;:500,&apos;M&apos;:1000&#125;</span><br><span class="line">        temp = 0</span><br><span class="line">        for i in range(len(s)):</span><br><span class="line">            if i&lt;len(s)-1 and  dict[s[i]]&lt;dict[s[i+1]]:</span><br><span class="line">                temp -= dict[s[i]]</span><br><span class="line">            else:</span><br><span class="line">                temp += dict[s[i]]</span><br><span class="line">        return temp</span><br></pre></td></tr></table></figure>
+
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢支持<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">计算机网络</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">科普</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">哈希表</a>
         		</li>
       		
 		</ul>
 	</div>
 
-          
+      
 	<div class="article-category tagcloud">
 		<i class="icon-book icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="/categories/计算机网络//" class="article-tag-list-link color1">计算机网络</a>
+        			<a href="/categories/算法题解//" class="article-tag-list-link color5">算法题解</a>
         		</li>
       		
 		</ul>
 	</div>
 
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2020/02/04/【算法题解3】罗马数字转整数/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
+  
+<nav id="article-nav">
+  
+    <a href="/2020/02/05/【算法题解4】-三数之和/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          【算法题解4】:三数之和
+        
+      </div>
+    </a>
   
   
-    </div></section>
+    <a href="/2020/02/03/【算法题解2】：盛最多水的容器/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">【算法题解2】：盛最多水的容器</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+  
+  
   
 
-    
+  
+
+  
+
+  
+  <div id="gitment-ctn"></div> 
+<link rel="stylesheet" href="//imsun.github.io/gitment/style/default.css">
+<script src="//imsun.github.io/gitment/dist/gitment.browser.js"></script>
+<script>
+var gitment = new Gitment({
+  id: "http://yoursite.com/2020/02/04/【算法题解3】罗马数字转整数/",
+  owner: 'rookiedali',
+  repo: 'rookiedali.github.io',
+  oauth: {
+    client_id: '9b5e06cfd8ef9b42644a',
+    client_secret: '6760f0767077a134fe2369f7697c5e944d4f97d4',
+  },
+})
+gitment.render('gitment-ctn')
+</script>
+  
 
 
           </div>
@@ -257,9 +409,9 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
+		isPost: true,
 		isArchive: false,
-		isTag: true,
+		isTag: false,
 		isCategory: false,
 		open_in_new: ture,
 		toc_hide_index: true,
