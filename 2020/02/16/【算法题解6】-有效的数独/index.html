@@ -6,15 +6,22 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Tag: 算法 | 胡大力的个人blog</title>
+  <title>【算法题解6】:有效的数独 | 胡大力的个人blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="胡大力的个人blog">
-<meta property="og:url" content="http://yoursite.com/tags/算法/index.html">
+  <meta name="description" content="算法题解第六题：判断给出的数独是否有效">
+<meta name="keywords" content="暴力解法">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【算法题解6】:有效的数独">
+<meta property="og:url" content="http://yoursite.com/2020/02/16/【算法题解6】-有效的数独/index.html">
 <meta property="og:site_name" content="胡大力的个人blog">
+<meta property="og:description" content="算法题解第六题：判断给出的数独是否有效">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://upload.wikimedia.org/wikipedia/commons/thumb/f/ff/Sudoku-by-L2G-20050714.svg/250px-Sudoku-by-L2G-20050714.svg.png">
+<meta property="og:updated_time" content="2020-02-16T09:04:43.505Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="胡大力的个人blog">
+<meta name="twitter:title" content="【算法题解6】:有效的数独">
+<meta name="twitter:description" content="算法题解第六题：判断给出的数独是否有效">
+<meta name="twitter:image" content="https://upload.wikimedia.org/wikipedia/commons/thumb/f/ff/Sudoku-by-L2G-20050714.svg/250px-Sudoku-by-L2G-20050714.svg.png">
   
     <link rel="alternative" href="/atom.xml" title="胡大力的个人blog" type="application/atom+xml">
   
@@ -166,79 +173,204 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-【算法题解6】-有效的数独" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2020" class="archive-year">2020</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/01/30/【算法题解】无重复字符串/" class="archive-article-date">
-  	<time datetime="2020-01-30T07:49:58.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-01-30</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/01/30/【算法题解】无重复字符串/">【算法题解】无重复字符串</a>
+    <h1 class="article-title" itemprop="name">
+      【算法题解6】:有效的数独
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
+        
+        <a href="/2020/02/16/【算法题解6】-有效的数独/" class="archive-article-date">
+  	<time datetime="2020-02-16T07:24:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-02-16</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>算法题解第六题：判断给出的数独是否有效</p>
+<a id="more"></a>
+<h3 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h3><p>判断一个 9x9 的数独是否有效。只需要根据以下规则，验证已经填入的数字是否有效即可。</p>
+<p>数字 1-9 在每一行只能出现一次。<br>数字 1-9 在每一列只能出现一次。<br>数字 1-9 在每一个以粗实线分隔的 3x3 宫内只能出现一次。<br><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/ff/Sudoku-by-L2G-20050714.svg/250px-Sudoku-by-L2G-20050714.svg.png" alt="数独示例图"></p>
+<p>示例 1:<br>输入:<br>[<br>  [“5”,”3”,”.”,”.”,”7”,”.”,”.”,”.”,”.”],<br>  [“6”,”.”,”.”,”1”,”9”,”5”,”.”,”.”,”.”],<br>  [“.”,”9”,”8”,”.”,”.”,”.”,”.”,”6”,”.”],<br>  [“8”,”.”,”.”,”.”,”6”,”.”,”.”,”.”,”3”],<br>  [“4”,”.”,”.”,”8”,”.”,”3”,”.”,”.”,”1”],<br>  [“7”,”.”,”.”,”.”,”2”,”.”,”.”,”.”,”6”],<br>  [“.”,”6”,”.”,”.”,”.”,”.”,”2”,”8”,”.”],<br>  [“.”,”.”,”.”,”4”,”1”,”9”,”.”,”.”,”5”],<br>  [“.”,”.”,”.”,”.”,”8”,”.”,”.”,”7”,”9”]<br>]<br>输出: true</p>
+<p>示例 2:<br>输入:<br>[<br>  [“8”,”3”,”.”,”.”,”7”,”.”,”.”,”.”,”.”],<br>  [“6”,”.”,”.”,”1”,”9”,”5”,”.”,”.”,”.”],<br>  [“.”,”9”,”8”,”.”,”.”,”.”,”.”,”6”,”.”],<br>  [“8”,”.”,”.”,”.”,”6”,”.”,”.”,”.”,”3”],<br>  [“4”,”.”,”.”,”8”,”.”,”3”,”.”,”.”,”1”],<br>  [“7”,”.”,”.”,”.”,”2”,”.”,”.”,”.”,”6”],<br>  [“.”,”6”,”.”,”.”,”.”,”.”,”2”,”8”,”.”],<br>  [“.”,”.”,”.”,”4”,”1”,”9”,”.”,”.”,”5”],<br>  [“.”,”.”,”.”,”.”,”8”,”.”,”.”,”7”,”9”]<br>]<br>输出: false<br>解释: 除了第一行的第一个数字从 5 改为 8 以外，空格内其他数字均与 示例1 相同。<br>     但由于位于左上角的 3x3 宫内有两个 8 存在, 因此这个数独是无效的。</p>
+<p>来源：力扣（LeetCode）<br>链接：<a href="https://leetcode-cn.com/problems/valid-sudoku" target="_blank" rel="noopener">https://leetcode-cn.com/problems/valid-sudoku</a><br>著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。</p>
+<p>###解法1：暴力解法<br>题目要求只需要对给出的数据进行判断是否有效，并不需要判断是否有解。因此一种暴力解法就是对给出三个条件:<br>1.每行没有重复数字<br>2.每列没有重复数字<br>3.每个3*3的小区域没有重复数字<br>进行实现既可,当输入同时满足以上三个条件时才返回True，否则返回False</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line">def isValidSudoku(self, board: List[List[str]]) -&gt; bool:</span><br><span class="line">    def judgeRow(board: List[List[str]]): #判断行函数</span><br><span class="line">        for i in range(9):                #设置一个空集合，查看每行元素是否有重复，遍历完一行后清空</span><br><span class="line">            s = set() </span><br><span class="line">            for j in range(9):        </span><br><span class="line">                if board[i][j] == &quot;.&quot;:</span><br><span class="line">                    continue</span><br><span class="line">                if board[i][j]  in s:</span><br><span class="line">                    return False</span><br><span class="line">                else:</span><br><span class="line">                    s.add(board[i][j])</span><br><span class="line">            s.clear()</span><br><span class="line">        return True</span><br><span class="line">    def judgeCol(board:List[List[str]]): #判断列函数</span><br><span class="line">        for i in range(9):               #设置一个空集合，查看每行元素是否有重复，遍历完一行后清空</span><br><span class="line">            s = set()</span><br><span class="line">            for j in range(9):</span><br><span class="line">                if board[j][i] == &quot;.&quot;:</span><br><span class="line">                    continue</span><br><span class="line">                if board[j][i]  in s:</span><br><span class="line">                    return False</span><br><span class="line">                else:</span><br><span class="line">                    s.add(board[j][i])</span><br><span class="line">            s.clear()</span><br><span class="line">        return True</span><br><span class="line">    def judgeBlock(board:List[List[str]]): #判断小区域函数：</span><br><span class="line">        for i in range(3):       #i，j表示外部坐标，即位于哪个区块         </span><br><span class="line">            for j in range(3):</span><br><span class="line">                s = set()</span><br><span class="line">                for k in range(9):</span><br><span class="line">                    x = k//3     #x,y表示区块内的坐标</span><br><span class="line">                    y = k%3      #合并得到[3*i+x][3*j+y]就是当前坐标</span><br><span class="line">                    if board[3*i+x][3*j+y] == &quot;.&quot;:</span><br><span class="line">                        continue</span><br><span class="line">                    if board[3*i+x][3*j+y]  in s:</span><br><span class="line">                        return False</span><br><span class="line">                    else:</span><br><span class="line">                        s.add(board[3*i+x][3*j+y])</span><br><span class="line">                s.clear()</span><br><span class="line">        return True</span><br><span class="line">    if ( judgeCol(board) and judgeRow(board) and judgeBlock(board)): #三个条件联立判断</span><br><span class="line">         return True</span><br><span class="line">    return False</span><br></pre></td></tr></table></figure>
+
+<p>解法2：位运算<br>上面方法效率不高，所以在看题解时看到一位大佬写的位运算方法解题，大开眼界。不过大佬写的是java版，这里写一个自己理解的python<br>版尝试实现。<br>原作者：parsee<br>链接：<a href="https://leetcode-cn.com/problems/valid-sudoku/solution/javabian-ma-yong-intbiao-shi-ji-he-yong-wei-yun-su/" target="_blank" rel="noopener">https://leetcode-cn.com/problems/valid-sudoku/solution/javabian-ma-yong-intbiao-shi-ji-he-yong-wei-yun-su/</a><br>来源：力扣（LeetCode）<br>著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。</p>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢支持<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">算法</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">字符串</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">滑动窗口</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">暴力解法</a>
         		</li>
       		
 		</ul>
 	</div>
 
-          
+      
 	<div class="article-category tagcloud">
 		<i class="icon-book icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="/categories/算法//" class="article-tag-list-link color3">算法</a>
+        			<a href="/categories/算法题解//" class="article-tag-list-link color5">算法题解</a>
         		</li>
       		
 		</ul>
 	</div>
 
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2020/02/16/【算法题解6】-有效的数独/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
+  
+<nav id="article-nav">
   
   
-    </div></section>
+    <a href="/2020/02/07/【算法题解5】-电话号码的字母组合/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">【算法题解5】:电话号码的字母组合</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+  
+  
   
 
-    
+  
+
+  
+
+  
+  <div id="gitment-ctn"></div> 
+<link rel="stylesheet" href="//imsun.github.io/gitment/style/default.css">
+<script src="//imsun.github.io/gitment/dist/gitment.browser.js"></script>
+<script>
+var gitment = new Gitment({
+  id: "http://yoursite.com/2020/02/16/【算法题解6】-有效的数独/",
+  owner: 'rookiedali',
+  repo: 'rookiedali.github.io',
+  oauth: {
+    client_id: '9b5e06cfd8ef9b42644a',
+    client_secret: '6760f0767077a134fe2369f7697c5e944d4f97d4',
+  },
+})
+gitment.render('gitment-ctn')
+</script>
+  
 
 
           </div>
@@ -261,9 +393,9 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
+		isPost: true,
 		isArchive: false,
-		isTag: true,
+		isTag: false,
 		isCategory: false,
 		open_in_new: ture,
 		toc_hide_index: true,
